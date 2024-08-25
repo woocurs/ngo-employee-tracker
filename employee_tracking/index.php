@@ -1,6 +1,7 @@
 <?php include 'header.php'; ?>
 
 <div class="container">
+    
     <div class="row justify-content-center">
         <div class="col-md-6 d-flex justify-content-center">
             <div class="form-container">

@@ -74,6 +74,7 @@
         .nav-link:hover {
             color: #1d2630;
         }
+        
     </style>
 </head>
 <body>
