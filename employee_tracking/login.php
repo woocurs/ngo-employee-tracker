@@ -1,6 +1,7 @@
 <?php include 'header.php'; ?>
 
 <?php
+//testing
 session_start();
 include 'db_connect.php'; // Include the database connection
 
