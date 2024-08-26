@@ -1,2 +1,0 @@
-email:mathu@gmail.com
-password:admin
