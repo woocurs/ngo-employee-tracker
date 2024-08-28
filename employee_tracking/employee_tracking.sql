@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2024 at 11:24 AM
+-- Generation Time: Aug 28, 2024 at 12:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,6 +31,10 @@ CREATE TABLE `employees` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `position` varchar(100) DEFAULT NULL,
+  `salary` decimal(10,2) DEFAULT NULL,
+  `join_date` date DEFAULT NULL,
   `phone_number` varchar(10) NOT NULL,
   `password` varchar(200) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1
@@ -40,8 +44,9 @@ CREATE TABLE `employees` (
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`id`, `name`, `email`, `phone_number`, `password`, `status`) VALUES
-(1, 'admin', 'adminngo@gmail.com', '0123456789', '12345', 1);
+INSERT INTO `employees` (`id`, `name`, `email`, `gender`, `position`, `salary`, `join_date`, `phone_number`, `password`, `status`) VALUES
+(1, 'admin', 'adminngo@gmail.com', NULL, NULL, NULL, NULL, '0123456789', '12345', 1),
+(2, 'fathi', 'fathimasafrina@woocurs.com', 'Female', 'ceo', 60000.00, '2024-08-22', '456789099', 'saf123', 1);
 
 -- --------------------------------------------------------
 
@@ -59,6 +64,13 @@ CREATE TABLE `employee_tracking` (
   `latitude` decimal(10,8) NOT NULL,
   `longitude` decimal(11,8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee_tracking`
+--
+
+INSERT INTO `employee_tracking` (`id`, `employee_id`, `sign_in_time`, `sign_in_location`, `sign_out_time`, `sign_out_location`, `latitude`, `longitude`) VALUES
+(2, 2, '2024-08-25 02:36:00', 'Office', NULL, NULL, 12.34567800, 98.76543200);
 
 --
 -- Indexes for dumped tables
@@ -87,13 +99,13 @@ ALTER TABLE `employee_tracking`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `employee_tracking`
 --
 ALTER TABLE `employee_tracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
