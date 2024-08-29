@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		 $_SESSION['employee_id'] = $id;
 		
 		
-   			$sign_in_time = $_POST['sign_in_time'];
+   			//$sign_in_time = $_POST['sign_in_time'];
     			 $latitude = $_POST['latitude'];
     			 $longitude = $_POST['longitude'];
     			 $sign_in_location = $_POST['sign_in_location'];
