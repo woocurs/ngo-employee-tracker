@@ -14,7 +14,6 @@
             background-color: rgb(9, 153, 110);
             position: fixed;
             padding: 0.5rem 1rem;
-            line-height: 1.2;
             top: 0;
             width: 100%;
             z-index: 1000;
@@ -79,13 +78,13 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-        <span class="navbar-brand">NGO</span>
+            <span class="navbar-brand">NGO</span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php">Sign In</a>
                     </li>
                     <li class="nav-item">
@@ -98,4 +97,22 @@
     <div class="container">
         <!-- Your page content here -->
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-9O4pCwN0G0wSPHzI7C2V9wFA2g5HpD6+wZs08oTf3i8LOa0UsM3bmZ6p1tFz6F4O" crossorigin="anonymous"></script>
+    
+    <!-- Additional JavaScript for Navbar Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var navbarToggler = document.querySelector('.navbar-toggler');
+            var navbarNav = document.querySelector('#navbarNav');
+            
+            navbarToggler.addEventListener('click', function () {
+                if (navbarNav.classList.contains('show')) {
+                    navbarNav.classList.remove('show');
+                } else {
+                    navbarNav.classList.add('show');
+                }
+            });
+        });
+    </script>
+
