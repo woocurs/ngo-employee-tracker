@@ -38,45 +38,48 @@ if (!$employeeResult) {
 <div class="container mt-5">
     <h2 class="text-center">Admin Dashboard</h2>
     <h3 class="mt-4">Employee Details</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Sign-In Time</th>
-                <th>Sign-In Location</th>
-                <th>Sign-Out Time</th>
-                <th>Sign-Out Location</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($employeeResult->num_rows > 0) { ?>
-                <?php while ($employee = $employeeResult->fetch_assoc()) { ?>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Sign-In Time</th>
+                    <th>Sign-In Location</th>
+                    <th>Sign-Out Time</th>
+                    <th>Sign-Out Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($employeeResult->num_rows > 0) { ?>
+                    <?php while ($employee = $employeeResult->fetch_assoc()) { ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($employee['id']); ?></td>
+                            <td><?php echo htmlspecialchars($employee['name']); ?></td>
+                            <td><?php echo htmlspecialchars($employee['email']); ?></td>
+                            <td><?php echo htmlspecialchars($employee['phone_number']); ?></td>
+                            <td><?php echo htmlspecialchars($employee['sign_in_time']); ?></td>
+                            <td><?php echo htmlspecialchars($employee['sign_in_location']); ?></td>
+                            <td><?php echo htmlspecialchars($employee['sign_out_time']); ?></td>
+                            <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
+                            <td>
+                                <a href="view_location.php?id=<?php echo htmlspecialchars($employee['id']); ?>" class="btn btn-info">View Location</a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                <?php } else { ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($employee['id']); ?></td>
-                        <td><?php echo htmlspecialchars($employee['name']); ?></td>
-                        <td><?php echo htmlspecialchars($employee['email']); ?></td>
-                        <td><?php echo htmlspecialchars($employee['phone_number']); ?></td>
-                        <td><?php echo htmlspecialchars($employee['sign_in_time']); ?></td>
-                        <td><?php echo htmlspecialchars($employee['sign_in_location']); ?></td>
-                        <td><?php echo htmlspecialchars($employee['sign_out_time']); ?></td>
-                        <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
-                        <td>
-                            <a href="view_location.php?id=<?php echo htmlspecialchars($employee['id']); ?>" class="btn btn-info">View Location</a>
-                        </td>
+                        <td colspan="9" class="text-center">No employees found matching the criteria.</td>
                     </tr>
                 <?php } ?>
-            <?php } else { ?>
-                <tr>
-                    <td colspan="9" class="text-center">No employees found matching the criteria.</td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
+ 
 
 <?php
 // Close the database connection
