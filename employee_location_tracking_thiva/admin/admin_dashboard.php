@@ -67,6 +67,8 @@ if (!$employeeResult) {
                             <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
                             <td>
                                 <a href="view_location.php?id=<?php echo htmlspecialchars($employee['id']); ?>" class="btn btn-info">View Location</a>
+                                <a href="employee_edit.php?id=<?php echo $employee['id']; ?>" class="btn btn-warning">Edit</a>
+                                <a href="employee_delete.php?id=<?php echo $employee['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -79,7 +81,6 @@ if (!$employeeResult) {
         </table>
     </div>
 </div>
- 
 
 <?php
 // Close the database connection
