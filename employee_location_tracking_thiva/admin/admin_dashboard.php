@@ -50,8 +50,7 @@ if (!$employeeResult) {
                     <th>Sign-In Location</th>
                     <th>Sign-Out Time</th>
                     <th>Sign-Out Location</th>
-                    <th>View</th>
-		    <th>Actions</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,14 +67,9 @@ if (!$employeeResult) {
                             <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
                             <td>
                                 <a href="view_location.php?id=<?php echo htmlspecialchars($employee['id']); ?>" class="btn btn-info">View Location</a>
+                                <a href="employee_edit.php?id=<?php echo $employee['id']; ?>" class="btn btn-warning">Edit</a>
+                                <a href="employee_delete.php?id=<?php echo $employee['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
                             </td>
-<td>
-                                <a href="employee_edit.php?id=<?php echo $employee['id']; ?>">Edit</a> | 
-                <a href="employee_delete.php?id=<?php echo $employee['id']; ?>" 
-                   onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
-
-                            </td>
-
                         </tr>
                     <?php } ?>
                 <?php } else { ?>
@@ -87,7 +81,6 @@ if (!$employeeResult) {
         </table>
     </div>
 </div>
- 
 
 <?php
 // Close the database connection
