@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="hidden" name="id" value="<?php echo $employee['id']; ?>">
         <label>Name:</label><input type="text" name="name" value="<?php echo $employee['name']; ?>" required><br>
         <label>Email:</label><input type="email" name="email" value="<?php echo $employee['email']; ?>" required><br>
-               <label>Phone Number:</label><input type="number" name="phone_number" value="<?php echo $employee['phone_number']; ?>"><br><br>
+               <label>Phone Number:</label><input type="tel" name="phone" pattern="[0-9]{10}" value="<?php echo $employee['phone_number']; ?>"><br><br>
                 <button type="submit">Update</button>
 		<button type="reset">Reset</button>
 

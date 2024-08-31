@@ -1,4 +1,5 @@
 <?php
+include('admin_header.php');
 include('../db_connect.php');
 session_start();
 
