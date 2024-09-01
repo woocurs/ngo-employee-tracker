@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form method="post" action="">
         <label>Name:</label><input type="text" name="name" required><br>
         <label>Email:</label><input type="email" name="email" required><br>
-	<label>Phone_Number:</label><input type="number" name="phone" required><br>
+	<label>Phone_Number:</label><input type="tel" name="phone" pattern="[0-9]{10}" required><br>
 	<label>Password:</label><input type="password" name="password" required><br>
                       
         <button type="submit">Register</button>

@@ -1,3 +1,6 @@
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +68,14 @@
         .nav-link:hover {
             color: #1d2630;
         }
+        p{
+            color: white;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -76,6 +87,12 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
+                    <!-- Conditionally display the "Dashboard" link -->
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin_dashboard.php">Dashboard</a>
+                    </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link" href="admin_logout.php">Logout</a>
                     </li>
