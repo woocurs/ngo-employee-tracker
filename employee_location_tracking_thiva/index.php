@@ -1,4 +1,4 @@
-<?php include 'header.php'; include('db_connect.php');// index.php ?>
+<?php include('header.php'); include('db_connect.php');?>
 <!DOCTYPE html>
 <html>
 <head>
