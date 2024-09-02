@@ -93,9 +93,11 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a class="nav-link" href="admin_dashboard.php">Dashboard</a>
                     </li>
                     <?php endif; ?>
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php' || $current_page == 'admin_dashboard.php'): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="admin_logout.php">Logout</a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
