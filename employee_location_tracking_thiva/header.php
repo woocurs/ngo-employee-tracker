@@ -22,6 +22,7 @@ $logo_path = get_logo_path($conn);
             background-color: rgb(9, 153, 110);
             position: fixed;
             padding: 0.5rem 1rem;
+	    line-height: 1.2;
             top: 0;
             width: 100%;
             z-index: 1000;

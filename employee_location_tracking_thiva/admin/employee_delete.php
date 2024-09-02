@@ -1,7 +1,5 @@
 
 
-
-
 <?php
 session_start();
 include('../db_connect.php'); // Assuming the database connection is in this file

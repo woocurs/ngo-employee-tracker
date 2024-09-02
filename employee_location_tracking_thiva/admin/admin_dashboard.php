@@ -38,7 +38,7 @@ if (!$employeeResult) {
 <div class="container mt-5">
     <h2 class="text-center">Admin Dashboard</h2>
     <h3 class="mt-4">Employee Details</h3>
-    <form id="employeeForm" action="edit_employee.php" method="post">
+    <form id="employeeForm" action=" " method="post">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -82,7 +82,7 @@ if (!$employeeResult) {
         </div>
     </form>
     <button type="button" class="btn btn-primary mt-3" onclick="editSelected()">Edit Selected</button>
-    <button type="button" class="btn btn-danger mt-3" onclick="confirmDelete()">Delete Selected</button>
+   <button type="button" class="btn btn-danger mt-3" onclick="confirmDelete()">Delete Selected</button>
   <!--  <button type="button" class="btn btn-warning mt-3" onclick="resetSelected()">Reset Selected</button>--> <!-- Reset Button -->
 </div>
 
@@ -108,6 +108,7 @@ function confirmDelete() {
     var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
     if (selected.length > 0) {
         if (confirm("Are you sure you want to delete the selected employees?")) {
+	    document.getElementById('employeeForm').action = 'employee_delete.php?action=delete';
             document.getElementById('employeeForm').submit();
         }
     } else {
