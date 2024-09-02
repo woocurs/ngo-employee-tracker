@@ -1,5 +1,5 @@
 <?php
-include('db_connect.php');
+include('db_connect.php'); include ('footer.php');
 
 include 'header.php'; 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

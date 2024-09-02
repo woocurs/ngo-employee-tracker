@@ -1,6 +1,6 @@
 <?php
 //employee_dashboard.php
-include('db_connect.php'); // Ensure the database connection is included
+include('db_connect.php') include('footer.php'); // Ensure the database connection is included
 session_start();
 if (!isset($_SESSION['employee_id'])) {
     // Redirect to login page if not logged in
@@ -84,6 +84,5 @@ $conn->close();
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
 </body>
 </html>
