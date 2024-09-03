@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 include('../db_connect.php');
 include('functions.php'); // Assuming you put the function in this file
 
@@ -6,6 +7,10 @@ $logo_path = get_logo_path($conn);
 ?>
 
 
+=======
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
+>>>>>>> main
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,6 +78,14 @@ $logo_path = get_logo_path($conn);
         .nav-link:hover {
             color: #1d2630;
         }
+        p{
+            color: white;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -92,9 +105,17 @@ $logo_path = get_logo_path($conn);
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
+                    <!-- Conditionally display the "Dashboard" link -->
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin_dashboard.php">Dashboard</a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php' || $current_page == 'admin_dashboard.php'): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="admin_logout.php">Logout</a>
                     </li>
+<<<<<<< HEAD
 		    <li class="nav-item">
                         <a class="nav-link" href="site_settings.php">Settings</a>
                     </li>
@@ -103,6 +124,9 @@ $logo_path = get_logo_path($conn);
                     </li>
 
 
+=======
+                    <?php endif; ?>
+>>>>>>> main
                 </ul>
             </div>
         </div>

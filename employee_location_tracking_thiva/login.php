@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+<?php include('header.php'); include('footer.php'); ?>
+
+
+>>>>>>> main
 <?php
 session_start();
 //include('header.php');

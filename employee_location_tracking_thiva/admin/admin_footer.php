@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <footer class="bg-dark text-white text-center py-3 mt-auto">
     <div class="container">
         <p class="mb-1">&copy; <?php echo date("Y"); ?> NGO Employee Location Tracking System. All rights reserved.</p>
@@ -15,5 +16,11 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+=======
+<footer style="text-align: center; padding: 10px; background-color: #1d2630;"> 
+    <p>&copy; <?php echo date("Y"); ?> NGO. All Rights Reserved.</p>
+</footer>
+        
+>>>>>>> main
 </body>
 </html>
