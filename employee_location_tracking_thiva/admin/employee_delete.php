@@ -17,7 +17,7 @@ if (isset($_POST['employee_ids']) && is_array($_POST['employee_ids'])) {
     // Prepare the SQL statement to delete employees
     $placeholders = implode(',', array_fill(0, count($employee_ids), '?'));
     $deleteQuery = "DELETE FROM employees WHERE id IN ($placeholders)";
-    i$stmt = $conn->prepare($deleteQuery);
+    $stmt = $conn->prepare($deleteQuery);
 
     // Bind the employee IDs to the statement
     $stmt->bind_param(str_repeat('i', count($employee_ids)), ...$employee_ids);
