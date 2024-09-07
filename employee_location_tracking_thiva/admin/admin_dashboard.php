@@ -38,48 +38,52 @@ if (!$employeeResult) {
 <div class="container mt-5">
     <h2 class="text-center">Admin Dashboard</h2>
     <h3 class="mt-4">Employee Details</h3>
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Sign-In Time</th>
-                    <th>Sign-In Location</th>
-                    <th>Sign-Out Time</th>
-                    <th>Sign-Out Location</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($employeeResult->num_rows > 0) { ?>
-                    <?php while ($employee = $employeeResult->fetch_assoc()) { ?>
+    <form id="employeeForm" action=" " method="post">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll"></th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Sign-In Time</th>
+                        <th>Sign-In Location</th>
+                        <th>Sign-Out Time</th>
+                        <th>Sign-Out Location</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($employeeResult->num_rows > 0) { ?>
+                        <?php while ($employee = $employeeResult->fetch_assoc()) { ?>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="employee_ids[]" value="<?php echo htmlspecialchars($employee['id']); ?>">
+                                </td>
+                                <td><?php echo htmlspecialchars($employee['id']); ?></td>
+                                <td><?php echo htmlspecialchars($employee['name']); ?></td>
+                                <td><?php echo htmlspecialchars($employee['email']); ?></td>
+                                <td><?php echo htmlspecialchars($employee['phone_number']); ?></td>
+                                <td><?php echo htmlspecialchars($employee['sign_in_time']); ?></td>
+                                <td><?php echo htmlspecialchars($employee['sign_in_location']); ?></td>
+                                <td><?php echo htmlspecialchars($employee['sign_out_time']); ?></td>
+                                <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
+                                                            </tr>
+                        <?php } ?>
+                    <?php } else { ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($employee['id']); ?></td>
-                            <td><?php echo htmlspecialchars($employee['name']); ?></td>
-                            <td><?php echo htmlspecialchars($employee['email']); ?></td>
-                            <td><?php echo htmlspecialchars($employee['phone_number']); ?></td>
-                            <td><?php echo htmlspecialchars($employee['sign_in_time']); ?></td>
-                            <td><?php echo htmlspecialchars($employee['sign_in_location']); ?></td>
-                            <td><?php echo htmlspecialchars($employee['sign_out_time']); ?></td>
-                            <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
-                            <td>
-                                <a href="view_location.php?id=<?php echo htmlspecialchars($employee['id']); ?>" class="btn btn-info">View Location</a>
-                                <a href="employee_edit.php?id=<?php echo $employee['id']; ?>" class="btn btn-warning">Edit</a>
-                                <a href="employee_delete.php?id=<?php echo $employee['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</a>
-                            </td>
+                            <td colspan="10" class="text-center">No employees found matching the criteria.</td>
                         </tr>
                     <?php } ?>
-                <?php } else { ?>
-                    <tr>
-                        <td colspan="9" class="text-center">No employees found matching the criteria.</td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <button type="button" class="btn btn-primary mt-3" onclick="editSelected()">Edit Selected</button>
+   <button type="button" class="btn btn-danger mt-3" onclick="confirmDelete()">Delete Selected</button>
+  <!--  <button type="button" class="btn btn-warning mt-3" onclick="resetSelected()">Reset Selected</button>--> <!-- Reset Button -->
 </div>
 
 <?php
@@ -89,3 +93,52 @@ $conn->close();
 // Include the footer
 include('admin_footer.php');
 ?>
+
+<script>
+// Select/Deselect All Checkboxes
+document.getElementById('selectAll').onclick = function() {
+    var checkboxes = document.querySelectorAll('input[name="employee_ids[]"]');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+};
+
+// Confirm deletion before submitting the form
+function confirmDelete() {
+    var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
+    if (selected.length > 0) {
+        if (confirm("Are you sure you want to delete the selected employees?")) {
+	    document.getElementById('employeeForm').action = 'employee_delete.php?action=delete';
+            document.getElementById('employeeForm').submit();
+        }
+    } else {
+        alert("Please select at least one employee to delete.");
+    }
+}
+
+// Edit selected employee
+function editSelected() {
+    var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
+    if (selected.length == 1) { // Allow editing only one employee at a time
+        var employeeId = selected[0].value;
+        window.location.href = 'employee_edit.php?id=' + employeeId;
+    } else if (selected.length > 1) {
+        alert("Please select only one employee to edit.");
+    } else {
+        alert("Please select an employee to edit.");
+    }
+}
+
+// Reset selected employee details
+//function resetSelected() {
+  //  var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
+  //  if (selected.length > 0) {
+    //    if (confirm("Are you sure you want to reset the details of the selected employees?")) {
+     //       document.getElementById('employeeForm').action = 'employee_actions.php?action=reset';
+     //       document.getElementById('employeeForm').submit();
+      //  }
+   // } else {
+    //    alert("Please select at least one employee to reset.");
+  //  }
+//}
+</script>

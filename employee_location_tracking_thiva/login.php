@@ -1,11 +1,15 @@
+<<<<<<< HEAD
+=======
 <?php include('header.php'); include('footer.php'); ?>
 
 
+>>>>>>> main
 <?php
-//login.php
 session_start();
-include('db_connect.php'); // Include the database connection
+//include('header.php');
+include('db_connect.php');
 
+ // Include the database connection
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
     $password = $_POST['password'];
@@ -60,5 +64,3 @@ $stmt_insert = $conn->prepare("INSERT INTO employee_tracking (employee_id, sign_
 $conn->close();
 ?>
 
-</body>
-</html>

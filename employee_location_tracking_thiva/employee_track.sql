@@ -101,6 +101,7 @@ INSERT INTO `employee_tracking` (`id`, `employee_id`, `sign_in_time`, `sign_in_l
 -- Indexes for dumped tables
 --
 
+
 --
 -- Indexes for table `admin`
 --
@@ -154,6 +155,48 @@ ALTER TABLE `employee_tracking`
 ALTER TABLE `employee_tracking`
   ADD CONSTRAINT `employee_tracking_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`);
 COMMIT;
+
+--
+-- Table structure for table `site_settings`
+--
+
+CREATE TABLE `site_settings` (
+  `id` int(11) NOT NULL,
+  `logo_path` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `facebook_link` varchar(255) NOT NULL,
+  `twitter_link` varchar(255) NOT NULL,
+  `linkedin_link` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `site_settings`
+--
+
+INSERT INTO `site_settings` (`id`, `logo_path`, `name`, `facebook_link`, `twitter_link`, `linkedin_link`) VALUES
+(4, 'uploads/ngo2.png', 'NGO Employee Location Tracking System', '', '', '');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,6 +1,16 @@
 <?php
+<<<<<<< HEAD
+include('../db_connect.php');
+include('functions.php'); // Assuming you put the function in this file
+
+$logo_path = get_logo_path($conn);
+?>
+
+
+=======
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
+>>>>>>> main
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +91,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <span class="navbar-brand">NGO Admin</span>
+	  <a class="navbar-brand" href="#">
+            <?php if ($logo_path): ?>
+                <img src="<?php echo $logo_path; ?>" alt="Logo" style="height: 50px;">
+            <?php else: ?>
+
+            <span>NGO Admin</span>
+	   <?php endif; ?>
+        </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -97,7 +115,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li class="nav-item">
                         <a class="nav-link" href="admin_logout.php">Logout</a>
                     </li>
+<<<<<<< HEAD
+		    <li class="nav-item">
+                        <a class="nav-link" href="site_settings.php">Settings</a>
+                    </li>
+		    <li class="nav-item">
+                        <a class="nav-link" href="admin_dashboard.php">Admin-Home</a>
+                    </li>
+
+
+=======
                     <?php endif; ?>
+>>>>>>> main
                 </ul>
             </div>
         </div>
