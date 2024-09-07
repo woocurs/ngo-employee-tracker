@@ -75,7 +75,7 @@ $conn->close();
             <form id="locationForm" action="logout.php" method="post">
                 <input type="hidden" id="latitude" name="latitude">
                 <input type="hidden" id="longitude" name="longitude">
-              //  <input type="hidden" id="sign_out_time" name="sign_out_time">
+             <!--  <input type="hidden" id="sign_out_time" name="sign_out_time">-->
                 <input type="hidden" id="sign_out_location" name="sign_out_location">
 
                 <input type="submit" name="signOut" onclick="getLocation('signOut')" value="Sign Out" class="btn btn-danger w-100">
