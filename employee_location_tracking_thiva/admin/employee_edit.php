@@ -1,53 +1,87 @@
 <?php
-include('../db_connect.php');
-
+// Start session and include necessary files
+session_start();
 include('admin_header.php');
+include('../db_connect.php'); // Assuming the database connection is in this file
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $stmt = $conn->prepare("SELECT * FROM employees WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $employee = $stmt->get_result()->fetch_assoc();
+// Check if the admin is logged in
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: index.php"); // Redirect to login page if not logged in
+    exit();
 }
 
+// Initialize a variable to store the success message
+$successMessage = "";
+
+// Get the employee IDs from the URL
+$employee_ids = isset($_GET['ids']) ? explode(",", $_GET['ids']) : [];
+if (empty($employee_ids)) {
+    echo "No employees selected.";
+    exit();
+}
+
+// Fetch the details of the first selected employee
+$employee_id = $employee_ids[0];
+$employeeQuery = "SELECT name, email, phone_number FROM employees WHERE id = ?";
+$stmt = $conn->prepare($employeeQuery);
+$stmt->bind_param("i", $employee_id);
+$stmt->execute();
+$employeeResult = $stmt->get_result();
+
+if ($employeeResult->num_rows == 0) {
+    echo "Employee not found.";
+    exit();
+}
+
+$employee = $employeeResult->fetch_assoc();
+
+// Handle form submission to update employee details
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
-    
 
-    
-    $stmt = $conn->prepare("UPDATE employees SET name=?, email=?, phone_number=?  WHERE id=?");
-    $stmt->bind_param("ssii", $name, $email, $phone_number, $id);
-   
+    $updateQuery = "UPDATE employees SET name = ?, email = ?, phone_number = ? WHERE id = ?";
+    $updateStmt = $conn->prepare($updateQuery);
+    $updateStmt->bind_param("sssi", $name, $email, $phone_number, $employee_id);
+    $updateStmt->execute();
 
-    if ($stmt->execute()) {
-        header("Location: admin_dashboard.php");
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+    // Set the success message after updating the employee details
+    $successMessage = "Successfully changed!";
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Employee</title>
-    <link rel="stylesheet" href="../styles.css">
-</head>
-<body>
+<div class="container mt-5">
     <h2>Edit Employee</h2>
-    <form method="post" action="">
-        <input type="hidden" name="id" value="<?php echo $employee['id']; ?>">
-        <label>Name:</label><input type="text" name="name" value="<?php echo $employee['name']; ?>" required><br>
-        <label>Email:</label><input type="email" name="email" value="<?php echo $employee['email']; ?>" required><br>
-               <label>Phone Number:</label><input type="tel" name="phone" pattern="[0-9]{10}" value="<?php echo $employee['phone_number']; ?>"><br><br>
-                <button type="submit">Update</button>
-		<button type="reset">Reset</button>
 
+    <!-- Display the success message if it exists -->
+    <?php if (!empty($successMessage)) { ?>
+        <div class="alert alert-success">
+            <?php echo $successMessage; ?>
+        </div>
+    <?php } ?>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" value="<?php echo htmlspecialchars($employee['name']); ?>" required>
+        </div>
+        <div class="form-group mt-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($employee['email']); ?>" required>
+        </div>
+        <div class="form-group mt-3">
+            <label for="phone_number">Phone Number</label>
+            <input type="text" name="phone_number" id="phone_number" class="form-control" value="<?php echo htmlspecialchars($employee['phone_number']); ?>" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+        <a href="admin_dashboard.php" class="btn btn-secondary mt-3">Cancel</a>
     </form>
-</body>
-</html>
-<?php include('admin_footer.php'); ?>
+</div>
+
+<?php
+
+
+// Include the footer
+include('admin_footer.php');
+?>

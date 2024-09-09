@@ -1,68 +1,55 @@
-<?php include('header.php'); include('db_connect.php');?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
-   
-    <script>
-        function getLocation(signIn) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    // Get current date and time for sign-in
-                  //  var signInTime = new Date().toLocaleString(); // Format: YYYY-MM-DDTHH:MM:SSZ
-
-                    // Generate sign-in location string (latitude, longitude)
-                    var signInLocation = position.coords.latitude + ', ' + position.coords.longitude;
-
-                    // Set hidden fields with location and time data
-                    document.getElementById('latitude').value = position.coords.latitude;
-                    document.getElementById('longitude').value = position.coords.longitude;
-                   // document.getElementById('sign_in_time').value = signInTime;
-                    document.getElementById('sign_in_location').value = signInLocation;
-
-                    // Submit the form
-                    document.getElementById('locationForm').submit();
-                }, function(error) {
-                    alert("Error getting location: " + error.message);
-                });
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Home Page</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
         }
-    </script>
-
+        .content {
+            margin-top: 90px;
+        }
+        .content img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: -40px;
+        }
+        h2 {
+            color: #1d2630;
+            font-family: 'Georgia', serif;
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .content p {
+            font-family: 'Georgia', serif;
+            font-size: 20px;
+            color: rgb(211, 211, 211);
+            margin-top: -40px;
+        }
+    </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 d-flex justify-content-center">
-            <div class="form-container">
-                <h2>NGO EMPLOYEE</h2>
-                <h3>SIGN IN</h3>
-                <form id="locationForm" action="login.php" method="post">
-                    <div class="mb-3">
-                        <input type="text" name="id" class="form-control" placeholder="Enter ID" required>
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Enter Password" required>
-                    </div>
-                    <!-- Hidden fields for location and time data -->
-                    <input type="hidden" id="latitude" name="latitude">
-                    <input type="hidden" id="longitude" name="longitude">
-                   <!-- <input type="hidden" id="sign_in_time" name="sign_in_time">-->
-                    <input type="hidden" id="sign_in_location" name="sign_in_location">
-
-                    <div class="text-center">
-                        <input type="submit" onclick="getLocation('signIn')" value="Sign In" class="btn btn-success w-100">
-                        <input type="reset" value="Reset" class="btn btn-success w-100 mt-2">
-                    </div>
-                </form>
+    <?php include 'header.php'; ?>
+    
+    <div class="container content">
+        <h2>Welcome to RAHAMA</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Replace with your image -->
+                <img src="image.png" alt="Image">
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <br>
+                <br>
+                <p>
+                    FORUT Norway, a leading Humanitarian Action agency, decided to discontinue its direct implementation in 2010 after a long duration of services in Sri Lanka. One of the imperative reasons for the said withdrawal was to empower partner institutions to link with other prospects too while operating as autonomous entities. Secondly, since the Sri Lankan population had entered into a new epoch under the post-war era, local capacities could be utilized to implement projects on humanitarian action.
+                </p>
             </div>
         </div>
     </div>
-</div>
-
-<?php include 'footer.php'; ?>
-</body>
-</html>
+    <?php include 'footer.php'; ?>

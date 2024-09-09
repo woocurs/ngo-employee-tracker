@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2024 at 05:54 AM
+-- Generation Time: Sep 04, 2024 at 07:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,8 +65,8 @@ CREATE TABLE `employees` (
 INSERT INTO `employees` (`id`, `name`, `email`, `phone_number`, `password`, `status`) VALUES
 (1, 'admin', 'adminngo@gmail.com', '0123456789', '12345', 1),
 (2, 'Thiva', 'thiva@gmail.com', '771234567', '123', 1),
-(7, 'Nihas', 'Nihas@gmail.com', '779876543', '321', 1),
-(10, 'Mathu', 'mathu@gmail.com', '771234098', 'aaa', 1);
+(10, 'Mathu', 'mathu@gmail.com', '771234098', 'aaa', 1),
+(13, 'Thivya', 'thivi@gmail.com', '78123456', 'zzzz', 1);
 
 -- --------------------------------------------------------
 
@@ -95,12 +95,48 @@ INSERT INTO `employee_tracking` (`id`, `employee_id`, `sign_in_time`, `sign_in_l
 (1, 1, '0000-00-00 00:00:00', '6.88128, 79.8818304', '', '', '0000-00-00 00:00:00', NULL, '', ''),
 (3, 2, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
 (4, 2, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
-(5, 1, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', '');
+(5, 1, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(6, 2, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(7, 1, '0000-00-00 00:00:00', '', '', '', NULL, NULL, '', ''),
+(8, 1, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(9, 2, '0000-00-00 00:00:00', '', '', '', NULL, NULL, '', ''),
+(10, 2, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(11, 1, '0000-00-00 00:00:00', '', '', '', NULL, NULL, '', ''),
+(12, 1, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(13, 2, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(14, 1, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(15, 2, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(16, 1, '0000-00-00 00:00:00', '7.1335936, 79.8851072', '7.1335936', '79.8851072', NULL, NULL, '', ''),
+(17, 10, '2024-08-27 18:10:53', '', '', '', NULL, NULL, '', ''),
+(18, 2, '2024-08-27 18:12:04', '8.8178688, 81.0778624', '8.8178688', '81.0778624', NULL, NULL, '', ''),
+(19, 1, '2024-09-03 23:19:44', '', '', '', NULL, NULL, '', ''),
+(20, 1, '2024-09-04 03:33:34', '', '', '', NULL, NULL, '', ''),
+(21, 1, '2024-09-04 03:34:16', '', '', '', NULL, NULL, '', ''),
+(22, 1, '2024-09-04 03:35:09', '', '', '', NULL, NULL, '', ''),
+(23, 1, '2024-09-04 03:36:29', '', '', '', NULL, NULL, '', ''),
+(24, 1, '2024-09-04 03:36:34', '', '', '', NULL, NULL, '', ''),
+(25, 1, '2024-09-04 10:16:10', '', '', '', NULL, NULL, '', ''),
+(26, 1, '2024-09-04 10:16:26', '', '', '', NULL, NULL, '', ''),
+(27, 1, '2024-09-04 10:21:46', '', '', '', NULL, NULL, '', ''),
+(28, 1, '2024-09-04 10:22:30', '', '', '', NULL, NULL, '', ''),
+(29, 1, '2024-09-04 10:22:42', '', '', '', NULL, NULL, '', ''),
+(30, 1, '2024-09-04 10:26:19', '', '', '', NULL, NULL, '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `logo` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
 --
-
 
 --
 -- Indexes for table `admin`
@@ -124,6 +160,12 @@ ALTER TABLE `employee_tracking`
   ADD KEY `employee_id` (`employee_id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -137,13 +179,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `employee_tracking`
 --
 ALTER TABLE `employee_tracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -155,48 +203,6 @@ ALTER TABLE `employee_tracking`
 ALTER TABLE `employee_tracking`
   ADD CONSTRAINT `employee_tracking_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`);
 COMMIT;
-
---
--- Table structure for table `site_settings`
---
-
-CREATE TABLE `site_settings` (
-  `id` int(11) NOT NULL,
-  `logo_path` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `facebook_link` varchar(255) NOT NULL,
-  `twitter_link` varchar(255) NOT NULL,
-  `linkedin_link` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `site_settings`
---
-
-INSERT INTO `site_settings` (`id`, `logo_path`, `name`, `facebook_link`, `twitter_link`, `linkedin_link`) VALUES
-(4, 'uploads/ngo2.png', 'NGO Employee Location Tracking System', '', '', '');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `site_settings`
---
-ALTER TABLE `site_settings`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `site_settings`
---
-ALTER TABLE `site_settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-COMMIT;
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
