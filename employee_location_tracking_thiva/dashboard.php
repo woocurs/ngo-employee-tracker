@@ -1,6 +1,6 @@
 <?php
 //employee_dashboard.php
-include('db_connect.php') include('footer.php'); // Ensure the database connection is included
+include('db_connect.php'); // Ensure the database connection is included
 session_start();
 if (!isset($_SESSION['employee_id'])) {
     // Redirect to login page if not logged in
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signOut'])) {
 
     if ($update_stmt->execute()) {
         echo "Sign out successful!";
-        header("Location: index.php");
+        header("Location: sign_in.php");
         exit();
     } else {
         echo "Error: " . $stmt->error;
@@ -34,8 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signOut'])) {
 
     $update_stmt->close();
 }
-
-$conn->close();
 ?>
 
 <?php include 'header.php'; ?>
@@ -75,7 +73,7 @@ $conn->close();
             <form id="locationForm" action="logout.php" method="post">
                 <input type="hidden" id="latitude" name="latitude">
                 <input type="hidden" id="longitude" name="longitude">
-             <!--  <input type="hidden" id="sign_out_time" name="sign_out_time">-->
+              //  <input type="hidden" id="sign_out_time" name="sign_out_time">
                 <input type="hidden" id="sign_out_location" name="sign_out_location">
 
                 <input type="submit" name="signOut" onclick="getLocation('signOut')" value="Sign Out" class="btn btn-danger w-100">
@@ -84,5 +82,6 @@ $conn->close();
     </div>
 </div>
 
+<?php include 'footer.php'; ?>
 </body>
 </html>

@@ -1,16 +1,21 @@
 <?php
-<<<<<<< HEAD
-include('../db_connect.php');
-include('functions.php'); // Assuming you put the function in this file
+//ssession_start();
+include('../db_connect.php'); // Include database connection
 
-$logo_path = get_logo_path($conn);
+
+// Fetch current settings
+$settingsQuery = "SELECT company_name, logo FROM settings LIMIT 1";
+$settingsResult = $conn->query($settingsQuery);
+$settings = $settingsResult ? $settingsResult->fetch_assoc() : null;
+
+// Initialize default values for settings
+$companyName = $settings['company_name'] ?? 'NGO Admin';
+$logo = $settings['logo'] ?? 'logo.png'; // Default logo if not set
 ?>
-
-
-=======
+<?php
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
->>>>>>> main
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,18 +38,23 @@ $current_page = basename($_SERVER['PHP_SELF']);
             z-index: 1000;
         }
         .navbar-brand {
+            display: flex;
+            align-items: center;
             margin-left: 60px;
             font-size: 30px;
             color: rgb(230, 230, 230);
             font-family: 'Georgia', serif;
             pointer-events: none;
         }
+        .navbar-brand img {
+            height: 40px; 
+            margin-right: 10px;
+        }
         .nav-item {
             margin-right: 35px;
             font-size: 18px; 
             color: white;
         }
-
         .container {
             margin-top: 100px;
         }
@@ -78,7 +88,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         .nav-link:hover {
             color: #1d2630;
         }
-        p{
+        p {
             color: white;
             text-align: center;
             font-family: 'Georgia', serif;
@@ -86,47 +96,66 @@ $current_page = basename($_SERVER['PHP_SELF']);
             margin-bottom: 20px;
             margin-top: 10px;
         }
+
+        footer {
+            background-color: #1d2630;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-content p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .footer-content a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-	  <a class="navbar-brand" href="#">
-            <?php if ($logo_path): ?>
-                <img src="<?php echo $logo_path; ?>" alt="Logo" style="height: 50px;">
-            <?php else: ?>
-
-            <span>NGO Admin</span>
-	   <?php endif; ?>
-        </a>
-
+            <a class="navbar-brand" href="#">
+                <img src="<?php echo htmlspecialchars($logo); ?>" alt="Logo"> <!-- Use the dynamic logo path -->
+                <?php echo htmlspecialchars($companyName); ?> <!-- Use the dynamic company name -->
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <!-- Conditionally display the "Dashboard" link -->
-                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php'): ?>
+                
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php' || $current_page == 'admin_dashboard.php'  || $current_page == 'settings.php'|| $current_page == 'register.php'): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="admin_dashboard.php">Dashboard</a>
                     </li>
                     <?php endif; ?>
-                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php' || $current_page == 'admin_dashboard.php'): ?>
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php' || $current_page == 'admin_dashboard.php' || $current_page == 'settings.php'|| $current_page == 'register.php'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.php">Settings</a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php' || $current_page == 'admin_dashboard.php'  || $current_page == 'settings.php'|| $current_page == 'register.php'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.php">Sign Up</a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if($current_page == 'view_location.php' || $current_page == 'employee_edit.php' || $current_page == 'admin_dashboard.php'  || $current_page == 'settings.php'|| $current_page == 'register.php'): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="admin_logout.php">Logout</a>
                     </li>
-<<<<<<< HEAD
-		    <li class="nav-item">
-                        <a class="nav-link" href="site_settings.php">Settings</a>
-                    </li>
-		    <li class="nav-item">
-                        <a class="nav-link" href="admin_dashboard.php">Admin-Home</a>
-                    </li>
-
-
-=======
                     <?php endif; ?>
->>>>>>> main
+                    
                 </ul>
             </div>
         </div>
@@ -137,7 +166,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-9O4pCwN0G0wSPHzI7C2V9wFA2g5HpD6+wZs08oTf3i8LOa0UsM3bmZ6p1tFz6F4O" crossorigin="anonymous"></script>
     
-    <!-- Additional JavaScript for Navbar Toggle -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var navbarToggler = document.querySelector('.navbar-toggler');
@@ -148,4 +176,5 @@ $current_page = basename($_SERVER['PHP_SELF']);
             });
         });
     </script>
-
+</body>
+</html>

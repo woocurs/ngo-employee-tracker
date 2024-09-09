@@ -1,11 +1,3 @@
-<?php
-include('db_connect.php');
-include('admin/functions.php'); // Assuming you put the function in this file
-$logo_path = get_logo_path($conn);
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +14,7 @@ $logo_path = get_logo_path($conn);
             background-color: rgb(9, 153, 110);
             position: fixed;
             padding: 0.5rem 1rem;
-	    line-height: 1.2;
+            line-height: 0.9;
             top: 0;
             width: 100%;
             z-index: 1000;
@@ -33,6 +25,15 @@ $logo_path = get_logo_path($conn);
             color: rgb(230, 230, 230);
             font-family: 'Georgia', serif;
             pointer-events: none;
+            text-align: center; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+        }
+        .navbar-brand img {
+            width: 40px; 
+            height: 40px;
+            margin-right: 10px;
         }
         .nav-item {
             margin-right: 35px;
@@ -82,30 +83,51 @@ $logo_path = get_logo_path($conn);
         .nav-link:hover {
             color: #1d2630;
         }
+        footer {
+            background-color: #1d2630;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-content p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .footer-content a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-           <a class="navbar-brand" href="#">
-            <?php if ($logo_path): ?>
-                <img src="<?php echo $logo_path; ?>" alt="NGO" style="height: 50px;">
-            <?php else: ?>
-
-            <span>NGO Employee</span>
-	   <?php endif; ?>
-        </a>
-
+            <span class="navbar-brand">
+                <img src="admin/logo.png" alt="Logo">
+                <span>RAHAMA</span>
+            </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Sign In</a>
+                <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.php">Sign Up</a>
+                        <a class="nav-link" href="about_us.php">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sign_in.php">Sign In</a>
                     </li>
                 </ul>
             </div>

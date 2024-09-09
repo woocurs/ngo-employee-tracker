@@ -6,6 +6,6 @@ session_unset(); // Unset all of the session variables
 session_destroy(); // Destroy the session itself
 
 // Redirect to the index page
-header("Location: index.php");
+header("Location: sign_in.php");
 exit();
 ?>

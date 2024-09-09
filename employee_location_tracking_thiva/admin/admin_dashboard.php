@@ -1,11 +1,11 @@
 <?php
-// Start session and include necessary files
 session_start();
+ob_start(); // Add this line at the top to buffer output
 include('admin_header.php');
-include('../db_connect.php'); // Assuming the database connection is in this file
+include('../db_connect.php');
 
 // Check if the admin is logged in
-if (!isset($_SESSION['admin_id'])) {
+if (!isset($_SESSION['admin_id'])){
     header("Location: index.php"); // Redirect to login page if not logged in
     exit();
 }
@@ -33,17 +33,18 @@ $employeeResult = $conn->query($employeeQuery);
 if (!$employeeResult) {
     die("Query failed: " . $conn->error);
 }
+ob_end_flush();
 ?>
 
 <div class="container mt-5">
     <h2 class="text-center">Admin Dashboard</h2>
     <h3 class="mt-4">Employee Details</h3>
-    <form id="employeeForm" action=" " method="post">
-        <div class="table-responsive">
+    <div class="table-responsive">
+        <form id="adminActionsForm" method="POST">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" id="selectAll"></th>
+                        <th></th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -52,16 +53,13 @@ if (!$employeeResult) {
                         <th>Sign-In Location</th>
                         <th>Sign-Out Time</th>
                         <th>Sign-Out Location</th>
-                       
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($employeeResult->num_rows > 0) { ?>
                         <?php while ($employee = $employeeResult->fetch_assoc()) { ?>
                             <tr>
-                                <td>
-                                    <input type="checkbox" name="employee_ids[]" value="<?php echo htmlspecialchars($employee['id']); ?>">
-                                </td>
+                                <td><input type="checkbox" name="select_employee[]" value="<?php echo $employee['id']; ?>"></td>
                                 <td><?php echo htmlspecialchars($employee['id']); ?></td>
                                 <td><?php echo htmlspecialchars($employee['name']); ?></td>
                                 <td><?php echo htmlspecialchars($employee['email']); ?></td>
@@ -70,75 +68,68 @@ if (!$employeeResult) {
                                 <td><?php echo htmlspecialchars($employee['sign_in_location']); ?></td>
                                 <td><?php echo htmlspecialchars($employee['sign_out_time']); ?></td>
                                 <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
-                                                            </tr>
+                            </tr>
                         <?php } ?>
                     <?php } else { ?>
                         <tr>
-                            <td colspan="10" class="text-center">No employees found matching the criteria.</td>
+                            <td colspan="9" class="text-center">No employees found.</td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
-        </div>
-    </form>
-    <button type="button" class="btn btn-primary mt-3" onclick="editSelected()">Edit Selected</button>
-   <button type="button" class="btn btn-danger mt-3" onclick="confirmDelete()">Delete Selected</button>
-  <!--  <button type="button" class="btn btn-warning mt-3" onclick="resetSelected()">Reset Selected</button>--> <!-- Reset Button -->
+            <div class="mt-3">
+                <button type="button" class="btn btn-info" id="viewSelectedLocationBtn">View Location</button>
+                <button type="button" class="btn btn-warning" id="editSelectedBtn">Edit Selected</button>
+                <button type="button" class="btn btn-danger" id="deleteSelectedBtn">Delete Selected</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<?php
-// Close the database connection
-$conn->close();
+<script>
+    // Function to handle View Location action
+    document.getElementById('viewSelectedLocationBtn').addEventListener('click', function () {
+        handleAction('view_location.php');
+    });
 
+    // Function to handle Edit action
+    document.getElementById('editSelectedBtn').addEventListener('click', function () {
+        handleAction('employee_edit.php');
+    });
+
+    // Function to handle Delete action
+    document.getElementById('deleteSelectedBtn').addEventListener('click', function () {
+        if (confirm('Are you sure you want to delete the selected employees?')) {
+            handleAction('employee_delete.php');
+        }
+    });
+
+    // Helper function to handle actions for selected employees
+    function handleAction(actionUrl) {
+        var selected = [];
+        document.querySelectorAll('input[name="select_employee[]"]:checked').forEach(function (checkbox) {
+            selected.push(checkbox.value);
+        });
+        if (selected.length > 0) {
+            var form = document.createElement('form');
+            form.method = 'GET';
+            form.action = actionUrl;
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'ids';
+            input.value = selected.join(',');
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            alert("Please select at least one employee.");
+        }
+    }
+</script>
+
+<?php
 // Include the footer
 include('admin_footer.php');
 ?>
-
-<script>
-// Select/Deselect All Checkboxes
-document.getElementById('selectAll').onclick = function() {
-    var checkboxes = document.querySelectorAll('input[name="employee_ids[]"]');
-    for (var checkbox of checkboxes) {
-        checkbox.checked = this.checked;
-    }
-};
-
-// Confirm deletion before submitting the form
-function confirmDelete() {
-    var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
-    if (selected.length > 0) {
-        if (confirm("Are you sure you want to delete the selected employees?")) {
-	    document.getElementById('employeeForm').action = 'employee_delete.php?action=delete';
-            document.getElementById('employeeForm').submit();
-        }
-    } else {
-        alert("Please select at least one employee to delete.");
-    }
-}
-
-// Edit selected employee
-function editSelected() {
-    var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
-    if (selected.length == 1) { // Allow editing only one employee at a time
-        var employeeId = selected[0].value;
-        window.location.href = 'employee_edit.php?id=' + employeeId;
-    } else if (selected.length > 1) {
-        alert("Please select only one employee to edit.");
-    } else {
-        alert("Please select an employee to edit.");
-    }
-}
-
-// Reset selected employee details
-//function resetSelected() {
-  //  var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
-  //  if (selected.length > 0) {
-    //    if (confirm("Are you sure you want to reset the details of the selected employees?")) {
-     //       document.getElementById('employeeForm').action = 'employee_actions.php?action=reset';
-     //       document.getElementById('employeeForm').submit();
-      //  }
-   // } else {
-    //    alert("Please select at least one employee to reset.");
-  //  }
-//}
-</script>

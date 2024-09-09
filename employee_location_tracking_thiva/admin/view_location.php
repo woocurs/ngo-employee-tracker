@@ -1,66 +1,81 @@
 <?php
-include('admin_header.php');
-include('../db_connect.php');
+// Start session and include necessary files
 session_start();
+include('admin_header.php');
+include('../db_connect.php'); // Assuming the database connection is in this file
 
+// Check if the admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: index.php");
+    header("Location: index.php"); // Redirect to login page if not logged in
     exit();
 }
 
-// Sanitize input
-$employee_id = intval($_GET['id']);
-
-if ($employee_id <= 0) {
-    die("Invalid employee ID.");
+// Get the employee IDs from the URL
+$employee_ids = isset($_GET['ids']) ? explode(",", $_GET['ids']) : [];
+if (empty($employee_ids)) {
+    echo "No employees selected.";
+    exit();
 }
 
-// Construct the query
-$locationQuery = "SELECT * FROM employee_tracking WHERE employee_id = $employee_id ORDER BY sign_in_time DESC LIMIT 1";
+// Fetch the most recent (current) location of each selected employee
+$employeeIds = implode(",", array_map('intval', $employee_ids));
+$locationQuery = "
+    SELECT e.id, e.name, et.sign_in_location AS current_location
+    FROM employees e
+    LEFT JOIN (
+        SELECT employee_id, sign_in_location
+        FROM employee_tracking
+        WHERE (employee_id, sign_in_time) IN (
+            SELECT employee_id, MAX(sign_in_time)
+            FROM employee_tracking
+            GROUP BY employee_id
+        )
+    ) et ON e.id = et.employee_id
+    WHERE e.id IN ($employeeIds)
+    ORDER BY e.id ASC";
 
-// Execute the query and check for errors
 $locationResult = $conn->query($locationQuery);
 
+// Check for query errors
 if (!$locationResult) {
     die("Query failed: " . $conn->error);
 }
-
-$location = $locationResult->fetch_assoc();
 ?>
 
 <div class="container mt-5">
-    <h2 class="text-center">Employee Location</h2>
-    <?php if ($location) { ?>
-        <p><strong>Sign In Time:</strong> <?php echo htmlspecialchars($location['sign_in_time']); ?></p>
-        <p><strong>Sign In Location:</strong> <?php echo htmlspecialchars($location['sign_in_location']); ?></p>
-        <p><strong>Latitude:</strong> <?php echo htmlspecialchars($location['latitude']); ?></p>
-        <p><strong>Longitude:</strong> <?php echo htmlspecialchars($location['longitude']); ?></p>
-        <?php if (!empty($location['sign_out_time'])) { ?>
-            <p><strong>Sign Out Time:</strong> <?php echo htmlspecialchars($location['sign_out_time']); ?></p>
-            <p><strong>Sign Out Location:</strong> <?php echo htmlspecialchars($location['sign_out_location']); ?></p>
-        <?php } ?>
-        
-        <!-- Google Map -->
-        <div id="map" style="width:100%;height:400px;"></div>
-
-        <script>
-        function initMap() {
-            var location = {lat: <?php echo $location['latitude']; ?>, lng: <?php echo $location['longitude']; ?>};
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 15,
-                center: location
-            });
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-        }
-        </script>
-
-        <!-- Replace YOUR_API_KEY with your actual API key -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
-        
-    <?php } else { ?>
-        <p>No location data available for this employee.</p>
-    <?php } ?>
+    <h2 class="text-center">Current Employee Locations</h2>
+    <div class="table-responsive mt-4">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Current Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($locationResult->num_rows > 0) { ?>
+                    <?php while ($location = $locationResult->fetch_assoc()) { ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($location['id']); ?></td>
+                            <td><?php echo htmlspecialchars($location['name']); ?></td>
+                            <td><?php echo htmlspecialchars($location['current_location']); ?></td>
+                        </tr>
+                    <?php } ?>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="3" class="text-center">No locations found for the selected employees.</td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-4">
+        <a href="admin_dashboard.php" class="btn btn-primary">Back to Dashboard</a>
+    </div>
 </div>
+
+<?php
+// Include the footer
+include('admin_footer.php');
+?>

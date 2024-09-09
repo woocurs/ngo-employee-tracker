@@ -1,14 +1,13 @@
 <?php
-include('db_connect.php'); include ('footer.php');
+include('../db_connect.php');
 
-include 'header.php'; 
+include 'admin_header.php'; 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $password = $_POST['password'];
     
-
 
 
     $stmt = $conn->prepare("INSERT INTO employees (name, email,phone_number, password) VALUES (?, ?, ?, ?)");
@@ -18,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Registration successful!";
         
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error:This email already exit " . $stmt->error;
     }
 }
 ?>
@@ -40,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit">Register</button>
     </form>
 
-</body>
+    <?php
+// Include the footer
+include('admin_footer.php');
+?>
 
-</html>
-<?php include ('footer.php'); ?>
