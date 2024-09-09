@@ -14,7 +14,7 @@
             background-color: rgb(9, 153, 110);
             position: fixed;
             padding: 0.5rem 1rem;
-            line-height: 1.2;
+            line-height: 0.9;
             top: 0;
             width: 100%;
             z-index: 1000;
@@ -25,6 +25,15 @@
             color: rgb(230, 230, 230);
             font-family: 'Georgia', serif;
             pointer-events: none;
+            text-align: center; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+        }
+        .navbar-brand img {
+            width: 40px; 
+            height: 40px;
+            margin-right: 10px;
         }
         .nav-item {
             margin-right: 35px;
@@ -74,22 +83,51 @@
         .nav-link:hover {
             color: #1d2630;
         }
+        footer {
+            background-color: #1d2630;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-content p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .footer-content a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-        <span class="navbar-brand">NGO</span>
+            <span class="navbar-brand">
+                <img src="admin/logo.png" alt="Logo">
+                <span>RAHAMA</span>
+            </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                 <li class="nav-item">
-                        <a class="nav-link" href="index.php">Sign In</a>
+                        <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="register.php">Sign Up</a>
+                        <a class="nav-link" href="about_us.php">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sign_in.php">Sign In</a>
                     </li>
                 </ul>
             </div>
@@ -98,6 +136,22 @@
     <div class="container">
         <!-- Your page content here -->
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-9O4pCwN0G0wSPHzI7C2V9wFA2g5HpD6+wZs08oTf3i8LOa0UsM3bmZ6p1tFz6F4O" crossorigin="anonymous"></script>
-</body>
-</html>
+    
+    <!-- Additional JavaScript for Navbar Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var navbarToggler = document.querySelector('.navbar-toggler');
+            var navbarNav = document.querySelector('#navbarNav');
+            
+            navbarToggler.addEventListener('click', function () {
+                if (navbarNav.classList.contains('show')) {
+                    navbarNav.classList.remove('show');
+                } else {
+                    navbarNav.classList.add('show');
+                }
+            });
+        });
+    </script>
+
