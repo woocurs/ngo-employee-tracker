@@ -29,13 +29,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $employee_id = $_SESSION['employee_id'];
 
             $stmt_insert = $conn->prepare("INSERT INTO employee_tracking (employee_id, sign_in_time, sign_in_location, sign_in_latitude, sign_in_longitude) VALUES (?, now(), ?, ?, ?)");
-            $stmt_insert->bind_param("isss", $employee_id, $sign_in_location, $latitude, $longitude);
+            $stmt_insert->bind_param("isdd", $employee_id, $sign_in_location, $latitude, $longitude);
 
             if (!$stmt_insert->execute()) {
                 echo "Error: " . $stmt_insert->error;
             }
 
             $stmt_insert->close();
+
 
             header("Location: dashboard.php"); // Redirect to dashboard
             exit(); // Important: stop further script execution
