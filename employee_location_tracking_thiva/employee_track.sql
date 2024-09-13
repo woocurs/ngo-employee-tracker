@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2024 at 12:06 PM
+-- Generation Time: Sep 13, 2024 at 02:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,7 +66,8 @@ INSERT INTO `employees` (`id`, `name`, `email`, `phone_number`, `password`, `sta
 (1, 'admin', 'adminngo@gmail.com', '0123456789', '12345', 1),
 (2, 'Thiva', 'thiva@gmail.com', '771234567', '123', 1),
 (10, 'Mathu', 'mathu@gmail.com', '771234098', 'aaa', 1),
-(13, 'Thivya', 'thivi@gmail.com', '78123456', 'zzzz', 1);
+(13, 'Thivya', 'thivi@gmail.com', '78123456', 'zzzz', 1),
+(15, 'safria', 'safrinawoocus@gmail.com', '762345342', 'azaz', 1);
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,11 @@ INSERT INTO `employee_tracking` (`id`, `employee_id`, `sign_in_time`, `sign_in_l
 (32, 13, '2024-09-09 15:17:00', '6.848512, 79.9178752', 6.84851200, 79.91787520, NULL, NULL, NULL, NULL, 0.00000000, 0.00000000),
 (33, 13, '2024-09-09 15:25:01', '6.848512, 79.9178752', 6.84851200, 79.91787520, NULL, NULL, NULL, NULL, 0.00000000, 0.00000000),
 (34, 13, '2024-09-09 15:29:35', '6.848512, 79.9178752', 6.84851200, 79.91787520, NULL, NULL, NULL, NULL, 0.00000000, 0.00000000),
-(35, 13, '2024-09-09 15:31:58', '6.848512, 79.9178752', 6.84851200, 79.91787520, NULL, NULL, NULL, NULL, 0.00000000, 0.00000000);
+(35, 13, '2024-09-09 15:31:58', '6.848512, 79.9178752', 6.84851200, 79.91787520, NULL, NULL, NULL, NULL, 0.00000000, 0.00000000),
+(36, 15, '2024-09-13 17:52:17', '', 0.00000000, 0.00000000, 0.00000000, 0.00000000, '2024-09-13 17:52:26', '', 0.00000000, 0.00000000),
+(37, 15, '2024-09-13 17:52:49', '', 0.00000000, 0.00000000, 0.00000000, 0.00000000, '2024-09-13 17:52:55', '', 0.00000000, 0.00000000),
+(38, 15, '2024-09-13 17:53:26', '', 0.00000000, 0.00000000, 7.95125130, 80.29156080, '2024-09-13 17:53:39', '7.9512513, 80.2915608', 0.00000000, 0.00000000),
+(39, 15, '2024-09-13 17:53:27', '7.9512513, 80.2915608', 7.95125130, 80.29156080, 7.95125130, 80.29156080, '2024-09-13 17:53:39', '7.9512513, 80.2915608', 0.00000000, 0.00000000);
 
 -- --------------------------------------------------------
 
@@ -186,13 +191,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `employee_tracking`
 --
 ALTER TABLE `employee_tracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `settings`
