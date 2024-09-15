@@ -1,12 +1,11 @@
 <?php
 // Start session and include necessary files
 session_start();
-include('admin_header.php');
-include('../db_connect.php'); // Assuming the database connection is in this file
+include('../db_connect.php'); // Ensure the database connection is included
 
 // Check if the admin is logged in
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: index.php"); // Redirect to login page if not logged in
+    header("Location: ../sign_in.php"); // Redirect to login page if not logged in
     exit();
 }
 
@@ -14,10 +13,11 @@ if (!isset($_SESSION['admin_id'])) {
 $employeeQuery = "
     SELECT e.id, e.name, e.email, e.phone_number, 
            et.sign_in_time, et.sign_in_location, 
-           et.sign_out_time, et.sign_out_location 
+           et.sign_out_time, et.sign_out_location,
+           et.sign_in_selfie, et.sign_out_selfie
     FROM employees e
     LEFT JOIN (
-        SELECT employee_id, sign_in_time, sign_in_location, sign_out_time, sign_out_location
+        SELECT employee_id, sign_in_time, sign_in_location, sign_out_time, sign_out_location, sign_in_selfie, sign_out_selfie
         FROM employee_tracking
         WHERE (employee_id, sign_in_time) IN (
             SELECT employee_id, MAX(sign_in_time)
@@ -35,10 +35,21 @@ if (!$employeeResult) {
 }
 ?>
 
+<?php include('admin_header.php'); ?>
+
 <div class="container mt-5">
     <h2 class="text-center">Admin Dashboard</h2>
+
+    <?php
+    // Display session message, if available
+    if (isset($_SESSION['message'])) {
+        echo "<div class='alert alert-info'>" . htmlspecialchars($_SESSION['message']) . "</div>";
+        unset($_SESSION['message']); // Clear the message after displaying
+    }
+    ?>
+
     <h3 class="mt-4">Employee Details</h3>
-    <form id="employeeForm" action=" " method="post">
+    <form id="employeeForm" action="" method="post">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -52,7 +63,10 @@ if (!$employeeResult) {
                         <th>Sign-In Location</th>
                         <th>Sign-Out Time</th>
                         <th>Sign-Out Location</th>
-                       
+                        <th>Sign-In Selfie</th>
+                        <th>Sign-Out Selfie</th>
+                        <th>View Location</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,20 +84,44 @@ if (!$employeeResult) {
                                 <td><?php echo htmlspecialchars($employee['sign_in_location']); ?></td>
                                 <td><?php echo htmlspecialchars($employee['sign_out_time']); ?></td>
                                 <td><?php echo htmlspecialchars($employee['sign_out_location']); ?></td>
-                                                            </tr>
+                                <td>
+                                    <?php if ($employee['sign_in_selfie']) { ?>
+                                        <a href="data:image/jpeg;base64,<?php echo base64_encode($employee['sign_in_selfie']); ?>" target="_blank">View Selfie</a>
+                                    <?php } else { ?>
+                                        No Selfie
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <?php if ($employee['sign_out_selfie']) { ?>
+                                        <a href="data:image/jpeg;base64,<?php echo base64_encode($employee['sign_out_selfie']); ?>" target="_blank">View Selfie</a>
+                                    <?php } else { ?>
+                                        No Selfie
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <a href="https://www.google.com/maps/@<?php echo htmlspecialchars($employee['sign_in_location']); ?>,15z" target="_blank">
+                                        <button type="button" class="btn btn-info">View</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="employee_edit.php?id=<?php echo htmlspecialchars($employee['id']); ?>">
+                                        <button type="button" class="btn btn-primary">Edit</button>
+                                    </a>
+                                </td>
+                            </tr>
                         <?php } ?>
                     <?php } else { ?>
                         <tr>
-                            <td colspan="10" class="text-center">No employees found matching the criteria.</td>
+                            <td colspan="13" class="text-center">No employees found matching the criteria.</td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
         </div>
     </form>
-    <button type="button" class="btn btn-primary mt-3" onclick="editSelected()">Edit Selected</button>
-   <button type="button" class="btn btn-danger mt-3" onclick="confirmDelete()">Delete Selected</button>
-  <!--  <button type="button" class="btn btn-warning mt-3" onclick="resetSelected()">Reset Selected</button>--> <!-- Reset Button -->
+
+    <button type="button" class="btn btn-danger mt-3" onclick="confirmDelete()">Delete Selected</button>
+    <button type="button" class="btn btn-warning mt-3" onclick="window.location.href='view_location.php'">View Location Selected</button>
 </div>
 
 <?php
@@ -91,7 +129,7 @@ if (!$employeeResult) {
 $conn->close();
 
 // Include the footer
-include('admin_footer.php');
+include('../footer.php');
 ?>
 
 <script>
@@ -108,37 +146,11 @@ function confirmDelete() {
     var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
     if (selected.length > 0) {
         if (confirm("Are you sure you want to delete the selected employees?")) {
-	    document.getElementById('employeeForm').action = 'employee_delete.php?action=delete';
+            document.getElementById('employeeForm').action = 'employee_delete.php?action=delete';
             document.getElementById('employeeForm').submit();
         }
     } else {
         alert("Please select at least one employee to delete.");
     }
 }
-
-// Edit selected employee
-function editSelected() {
-    var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
-    if (selected.length == 1) { // Allow editing only one employee at a time
-        var employeeId = selected[0].value;
-        window.location.href = 'employee_edit.php?id=' + employeeId;
-    } else if (selected.length > 1) {
-        alert("Please select only one employee to edit.");
-    } else {
-        alert("Please select an employee to edit.");
-    }
-}
-
-// Reset selected employee details
-//function resetSelected() {
-  //  var selected = document.querySelectorAll('input[name="employee_ids[]"]:checked');
-  //  if (selected.length > 0) {
-    //    if (confirm("Are you sure you want to reset the details of the selected employees?")) {
-     //       document.getElementById('employeeForm').action = 'employee_actions.php?action=reset';
-     //       document.getElementById('employeeForm').submit();
-      //  }
-   // } else {
-    //    alert("Please select at least one employee to reset.");
-  //  }
-//}
 </script>
