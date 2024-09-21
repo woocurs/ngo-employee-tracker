@@ -1,3 +1,15 @@
+<?php
+include('db_connect.php');
+include('admin/functions.php'); // Assuming you put the function in this file
+
+$site_info = get_logo_path($conn); // Fetch the logo path and company name
+$logo_path = $site_info['logo_path'];
+$company_name = $site_info['name'];
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +22,11 @@
             background-color: #1d2630;
         }
         .navbar {
-            margin-bottom: 50px;
+            margin-bottom: 0px;
             background-color: rgb(9, 153, 110);
             position: fixed;
             padding: 0.5rem 1rem;
-            line-height: 0.9;
+            line-height: 1.2;
             top: 0;
             width: 100%;
             z-index: 1000;
@@ -30,19 +42,19 @@
             align-items: center;
             justify-content: center; 
         }
-        .navbar-brand img {
-            width: 40px; 
-            height: 40px;
-            margin-right: 10px;
-        }
-        .nav-item {
+           
+	.nav-item {
             margin-right: 35px;
             font-size: 18px; 
             color: white;
         }
 
+	
+
         .container {
-            margin-top: 100px;
+            margin-top: 50px;
+        }
+
         }
         .form-container {
             max-width: 400px;
@@ -67,7 +79,7 @@
             font-family: 'Georgia', serif;
             font-size: 30px;
         }
-        .btn-primary {
+              .btn-primary {
             background-color: rgb(9, 153, 110);
             border-color: rgb(9, 153, 110);
         }
@@ -75,14 +87,34 @@
             background-color: #0056b3;
             border-color: #004085;
         }
-        .nav-link {
-            color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
-        }
-        .nav-link:hover {
-            color: #1d2630;
-        }
+
+
+       .nav-link {
+    	   color: white;
+           padding: 8px 16px;
+           border-radius: 5px;
+       }
+
+/* Change color on hover */
+     .nav-link:hover {
+          color: #1d2630;
+          background-color: white;
+      }
+
+/* Change color when clicked */
+    .nav-link:active {
+        color: #1d2630;
+        background-color: #f8f9fa;
+      }
+
+/* Indicate active page */
+   .nav-link.active {
+       color: #1d2630;
+       background-color: #e0e0e0;
+       font-weight: bold;
+       border-radius: 5px;
+     }
+  
         footer {
             background-color: #1d2630;
             color: #fff;
@@ -109,25 +141,37 @@
     </style>
 </head>
 <body>
+ <?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
+
+
     <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <span class="navbar-brand">
-                <img src="admin/logo.png" alt="Logo">
-                <span>RAHAMA</span>
-            </span>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <?php if ($logo_path): ?>
+                <img src="<?php echo htmlspecialchars($logo_path); ?>" alt="" style="height: 50px;"> <span style="color: rgb(230, 230, 230);"><?php echo htmlspecialchars($company_name); ?></span>
+
+            <?php else: ?>
+                <span style="color: rgb(230, 230, 230);"><?php echo htmlspecialchars($company_name); ?></span>
+            <?php endif; ?>
+        </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                 <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
-                    </li>
+                         <a class="nav-link <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">Home</a>
+                </li>
+		<li class="nav-item">
+                    <a class="nav-link <?php echo ($current_page == 'about_us.php') ? 'active' : ''; ?>" href="about_us.php">About Us</a>
+                </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="about_us.php">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="sign_in.php">Sign In</a>
+                         <a class="nav-link <?php echo ($current_page == 'sign_in.php') ? 'active' : ''; ?>" href="sign_in.php">Sign In</a>
+
                     </li>
                 </ul>
             </div>

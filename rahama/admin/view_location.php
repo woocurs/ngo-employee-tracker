@@ -43,7 +43,7 @@ if (!$locationResult) {
 ?>
 
 <div class="container mt-5">
-    <h2 class="text-center">Current Employee Locations</h2>
+    <h2 class="text-center" style="color:green;">Current Employee Locations</h2>
     <div class="table-responsive mt-4">
         <table class="table table-bordered">
             <thead>
