@@ -69,4 +69,4 @@ ob_end_flush(); // Flush the output buffer and turn off output buffering
 </body>
 </html>
 
-<?php include('admin_footer.php'); ?>
+<?php include('../footer.php'); ?>
