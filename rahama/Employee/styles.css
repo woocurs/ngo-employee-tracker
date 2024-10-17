@@ -23,7 +23,7 @@ label {
     margin-bottom: 8px;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="date"], select {
+input[type="text"], input[type="email"], input[type="password"], input[type="date"],input[type="number"], select {
     width: 100%;
     padding: 8px;
     margin-bottom: 20px;

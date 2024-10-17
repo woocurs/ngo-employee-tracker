@@ -13,8 +13,8 @@ $result = $conn->query($query);
 $footer = [
     'name' => 'NGO Employee Location Tracking System',  // Default name
     'facebook_link' => '#',  // Default placeholder links
-    'twitter_link' => '#',
-    'linkedin_link' => '#',
+    'youtube_link' => '#',
+
 ];
 
 // If a result is found, update the footer array
@@ -52,8 +52,8 @@ $conn->close();
                     <p class="mb-0">
                         Follow us on:
                         <a href="<?php echo htmlspecialchars($footer['facebook_link']); ?>" target="_blank" class="text-white ms-2"><i class="fab fa-facebook"></i></a>
-                        <a href="<?php echo htmlspecialchars($footer['twitter_link']); ?>" target="_blank" class="text-white ms-2"><i class="fab fa-twitter"></i></a>
-                        <a href="<?php echo htmlspecialchars($footer['linkedin_link']); ?>" target="_blank" class="text-white ms-2"><i class="fab fa-linkedin"></i></a>
+                        <a href="<?php echo htmlspecialchars($footer['youtube_link']); ?>" target="_blank" class="text-white ms-2"><i class="fab fa-youtube"></i></a>
+                        
                     </p>
                 </div>
             </div>
