@@ -120,11 +120,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page == 'admin_logout.php') ? 'active' : ''; ?>" href="admin_logout.php">Logout</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page == 'site_settings.php') ? 'active' : ''; ?>" href="../site_settings.php">Settings</a>
-                </li>
+             
  <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page == 'register.php') ? 'active' : ''; ?>" href="register.php">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo ($current_page == 'history.php') ? 'active' : ''; ?>" href="history.php">History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page == 'admin_dashboard.php') ? 'active' : ''; ?>" href="admin_dashboard.php">Admin-Home</a>
