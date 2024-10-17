@@ -48,7 +48,7 @@
             <div class="col-md-6 d-flex align-items-center  ">
                 <br>
                 <br>
-                <p>
+                <p><br>
                    <br> FORUT Norway, a leading Humanitarian Action agency, decided to discontinue its direct implementation in 2010 after a long duration of services in Sri Lanka. One of the imperative reasons for the said withdrawal was to empower partner institutions to link with other prospects too while operating as autonomous entities. Secondly, since the Sri Lankan population had entered into a new epoch under the post-war era, local capacities could be utilized to implement projects on humanitarian action.
                 </p>
             </div>

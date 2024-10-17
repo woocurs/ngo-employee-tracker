@@ -7,8 +7,8 @@ include('db_connect.php');
 $footer = [
     'name' => 'NGO Employee Location Tracking System',
     'facebook_link' => '#',
-    'twitter_link' => '#',
-    'linkedin_link' => '#',
+    'youtube_link' => '#',
+  
 ];
 
 // Fetch current footer settings from the database
@@ -99,17 +99,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handle footer settings update
     $name = $_POST['name'];
     $facebook = $_POST['facebook'];
-    $twitter = $_POST['twitter'];
-    $linkedin = $_POST['linkedin'];
+    $youtube = $_POST['youtube'];
+  
 
-    $stmt = $conn->prepare("UPDATE site_settings SET name = ?, facebook_link = ?, twitter_link = ?, linkedin_link = ? WHERE id = 1");
+    $stmt = $conn->prepare("UPDATE site_settings SET name = ?, facebook_link = ?, youtube_link = ? WHERE id = 1");
     
     // Check if the query was prepared successfully
     if ($stmt === false) {
         die('Error preparing statement for footer settings: ' . $conn->error);
     }
 
-    $stmt->bind_param("ssss", $name, $facebook, $twitter, $linkedin);
+    $stmt->bind_param("sss", $name, $facebook, $youtube);
     $stmt->execute();
     
     if ($stmt->affected_rows > 0) {
@@ -159,13 +159,10 @@ $conn->close();
             <input type="url" name="facebook" id="facebook" class="form-control" value="<?php echo $footer['facebook_link']; ?>">
         </div>
         <div class="mb-2">
-            <label for="twitter" class="form-label">Twitter Link</label>
-            <input type="url" name="twitter" id="twitter" class="form-control" value="<?php echo $footer['twitter_link']; ?>">
+            <label for="youtube" class="form-label">Youtube Link</label>
+            <input type="url" name="youtube" id="youtube" class="form-control" value="<?php echo $footer['youtube_link']; ?>">
         </div>
-        <div class="mb-2">
-            <label for="linkedin" class="form-label">LinkedIn Link</label>
-            <input type="url" name="linkedin" id="linkedin" class="form-control" value="<?php echo $footer['linkedin_link']; ?>">
-        </div>
+       
 
         <!-- Submit buttons -->
         <div class="d-grid gap-2 d-md-flex justify-content-md-end ">

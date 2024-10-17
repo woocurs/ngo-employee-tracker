@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['employee_id'])) {
+    header("Location: sign_in.php"); // Redirect if not signed in
+    exit();
+}
 include('db_connect.php');
 include 'header.php'; ?>
 
@@ -32,6 +36,28 @@ include 'header.php'; ?>
                     alert("Error accessing camera: " + error.message);
                 });
         }
+
+        function getLocation(event) {
+            event.preventDefault(); // Prevent default form submission
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+                    var signOutLocation = latitude + ', ' + longitude;
+
+                    document.getElementById('latitude').value = latitude;
+                    document.getElementById('longitude').value = longitude;
+                    document.getElementById('sign_out_location').value = signOutLocation;
+
+                    captureSelfie(function(selfieDataUrl) {
+                        document.getElementById('selfie').value = selfieDataUrl;
+                        document.getElementById('locationForm').submit();
+                    });
+                }, function(error) {
+                    alert("Error fetching location: " + error.message);
+                });
+        }
+    }
 
         function getLocation(event) {
             event.preventDefault(); // Prevent default form submission

@@ -51,7 +51,7 @@ ob_end_flush(); // Flush the output buffer and turn off output buffering
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <h2>Edit Employee</h2>
+    <h2 style="margin-top:30px; color:green";>Edit Employee</h2>
     <form method="post" action="">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($employee['id']); ?>">
         <label>Name:</label>
@@ -61,7 +61,7 @@ ob_end_flush(); // Flush the output buffer and turn off output buffering
         <input type="email" name="email" value="<?php echo htmlspecialchars($employee['email']); ?>" required><br>
         
         <label>Phone Number:</label>
-        <input type="number" name="phone_number" value="<?php echo htmlspecialchars($employee['phone_number']); ?>"><br><br>
+        <input type="tel" name="phone_number" value="<?php echo htmlspecialchars($employee['phone_number']); ?>"><br><br>
         
         <button type="submit">Update</button>
         <button type="reset">Reset</button>

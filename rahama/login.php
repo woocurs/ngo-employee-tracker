@@ -45,16 +45,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         throw new \Exception('Invalid image type');
                     }
                     $selfie = base64_decode($selfieDataUrl);
+                    $selfieFileName = 'selfies/' . uniqid() . '.' . $type; // Store in 'selfies/' folder
+
+                    file_put_contents($selfieFileName, $selfie); // Save file
                 } else {
                     throw new \Exception('Invalid image data');
                 }
 
-                // Save selfie to database
+                // Save selfie path to database
                 $stmt_insert = $conn->prepare("INSERT INTO employee_tracking (employee_id, sign_in_time, sign_in_location, sign_in_latitude, sign_in_longitude, sign_in_selfie) VALUES (?, now(), ?, ?, ?, ?)");
                 $sign_in_location = $_POST['sign_in_location'];
                 $latitude = $_POST['latitude'];
                 $longitude = $_POST['longitude'];
-                $stmt_insert->bind_param("issss", $_SESSION['employee_id'], $sign_in_location, $latitude, $longitude, $selfie);
+                $stmt_insert->bind_param("issss", $_SESSION['employee_id'], $sign_in_location, $latitude, $longitude, $selfieFileName);
 
                 if (!$stmt_insert->execute()) {
                     echo "Error: " . $stmt_insert->error;
@@ -68,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script>alert('Invalid password.');  window.location.href = 'sign_in.php';</script>";
         }
     } else {
-        echo "<script>alert('No user found with that ID.');  window.location.href = 'sign_in.php';</script>";
+        echo "<script>alert('No user found with that email.');  window.location.href = 'sign_in.php';</script>";
     }
 
     $stmt->close();
